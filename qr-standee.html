@@ -76,6 +76,19 @@
       margin-top: 14px;
     }
 
+    .download-status {
+      min-height: 18px;
+      margin-top: 8px;
+      color: #047857;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .download-status.error {
+      color: #b91c1c;
+    }
+
     .btn-action {
       padding: 12px;
       border-radius: var(--radius-md);
@@ -211,14 +224,14 @@
     }
 
     .standee-location-primary {
-      font-size: 0.82rem;
+      font-size: 0.75rem;
       color: #064e3b;
       font-weight: 800;
       line-height: 1.25;
     }
 
     .standee-location-secondary {
-      font-size: 0.71rem;
+      font-size: 0.66rem;
       color: #047857;
       font-weight: 700;
       line-height: 1.35;
@@ -329,6 +342,8 @@
         height: 100% !important;
         max-height: 100vh !important;
         overflow: hidden !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
       .no-print {
         display: none !important;
@@ -357,6 +372,14 @@
       #qrCanvasContainer canvas {
         max-width: 170px !important;
         max-height: 170px !important;
+      }
+      .standee-location-icon {
+        background: transparent !important;
+        border: 1px solid #047857 !important;
+        box-shadow: none !important;
+      }
+      .standee-location-icon svg {
+        fill: #047857 !important;
       }
     }
   </style>
@@ -397,6 +420,7 @@
           Download QR (PNG)
         </button>
       </div>
+      <p class="download-status" id="downloadStatus" role="status" aria-live="polite"></p>
       
       <div style="margin-top: 12px; text-align: center;">
         <a href="index.html" class="skip-btn" style="text-decoration: none;">⬅️ Back to Review Page Preview</a>
@@ -481,6 +505,7 @@
       const downloadBtn = document.getElementById('downloadQrBtn');
       const printBtn = document.getElementById('printStandeeBtn');
       const encodedUrlPreview = document.getElementById('encodedUrlPreview');
+      const downloadStatus = document.getElementById('downloadStatus');
       const standeeShopLocationPrimary = document.getElementById('standeeShopLocationPrimary');
       const standeeShopLocationSecondary = document.getElementById('standeeShopLocationSecondary');
 
@@ -527,23 +552,45 @@
         window.print();
       });
 
-      // Direct Download PNG Handler (Creates a clean high-res 1000px PNG)
+      // Download a high-resolution QR PNG using a Blob for reliable browser downloads.
       downloadBtn.addEventListener('click', () => {
-        const text = reviewLandingUrl;
-        const qr = qrcode(0, 'M');
-        qr.addData(text);
-        qr.make();
+        try {
+          const qr = qrcode(0, 'M');
+          qr.addData(reviewLandingUrl);
+          qr.make();
 
-        const hiResCanvas = document.createElement('canvas');
-        qr.renderToCanvas(hiResCanvas, 24, 60, '#000000', '#ffffff');
+          const hiResCanvas = document.createElement('canvas');
+          qr.renderToCanvas(hiResCanvas, 24, 60, '#000000', '#ffffff');
+          hiResCanvas.toBlob((blob) => {
+            if (!blob) {
+              if (downloadStatus) {
+                downloadStatus.classList.add('error');
+                downloadStatus.textContent = 'Could not create the QR PNG. Please try again.';
+              }
+              return;
+            }
 
-        const dataUrl = hiResCanvas.toDataURL('image/png');
-        const link = document.createElement('a');
-        link.download = 'Abhishek-Medical-Hall-Review-QR.png';
-        link.href = dataUrl;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+            const downloadUrl = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.download = 'Abhishek-Medical-Hall-Review-QR.png';
+            link.href = downloadUrl;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+
+            if (downloadStatus) {
+              downloadStatus.classList.remove('error');
+              downloadStatus.textContent = '✓ QR PNG downloaded successfully.';
+            }
+          }, 'image/png');
+        } catch (err) {
+          console.error('QR download error:', err);
+          if (downloadStatus) {
+            downloadStatus.classList.add('error');
+            downloadStatus.textContent = 'Could not download the QR. Please try again.';
+          }
+        }
       });
     });
   </script>
