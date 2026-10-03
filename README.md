@@ -38,30 +38,3 @@ AMH review/
 └── README.md          # Documentation & deployment guide
 ```
 
----
-
-## 🌐 How to Host for Free
-
-### Option 1: GitHub Pages (Recommended - 100% Free)
-1. Create a free GitHub repository.
-2. Upload all files from this folder.
-3. Go to **Settings > Pages > Branch: `main` > Save**.
-4. You get a live link like `https://username.github.io/amh-review/`.
-
-### Option 2: Vercel / Netlify / Cloudflare Pages
-- Drag and drop this folder directly into [Vercel](https://vercel.com) or [Netlify](https://netlify.com) for instant free hosting with custom HTTPS domain.
-
----
-
-## 🛠️ How to Customize
-
-All settings (Shop name, location, Google Review URL, custom suggestions) can be changed in **`js/config.js`**:
-
-```javascript
-const CONFIG = {
-  shopName: "Abhishek Medical Hall",
-  shopLocation: "Main Road, Adapur, East Champaran, Bihar - 845301",
-  googleReviewUrl: "YOUR_GOOGLE_REVIEW_LINK_HERE",
-  ...
-};
-```
