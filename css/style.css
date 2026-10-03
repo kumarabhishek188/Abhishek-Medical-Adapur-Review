@@ -132,18 +132,23 @@ body {
 
 .store-location {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  gap: 4px;
-  font-size: 0.82rem;
+  gap: 6px;
+  font-size: 0.84rem;
   color: var(--text-muted);
+  line-height: 1.4;
+  max-width: 92%;
+  margin: 0 auto;
+  text-align: left;
 }
 
 .store-location svg {
-  width: 14px;
-  height: 14px;
-  fill: var(--text-muted);
+  width: 16px;
+  height: 16px;
+  fill: var(--primary);
   flex-shrink: 0;
+  margin-top: 2px;
 }
 
 /* Rating Section */
