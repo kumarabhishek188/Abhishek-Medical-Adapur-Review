@@ -130,25 +130,78 @@ body {
   margin-bottom: 8px;
 }
 
-.store-location {
-  display: inline-flex;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 6px;
-  font-size: 0.84rem;
-  color: var(--text-muted);
-  line-height: 1.4;
-  max-width: 92%;
-  margin: 0 auto;
+/* Professional Location Card Badge */
+.store-location-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f0fdf4;
+  border: 1.5px solid #bbf7d0;
+  border-radius: var(--radius-md);
+  width: 100%;
+  padding: 10px 12px;
+  margin: 6px auto 0 auto;
   text-align: left;
+  max-width: 400px;
+  box-shadow: 0 2px 5px rgba(5, 150, 105, 0.06);
 }
 
-.store-location svg {
-  width: 16px;
-  height: 16px;
-  fill: var(--primary);
+.location-icon-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #059669, #047857);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
-  margin-top: 2px;
+  box-shadow: 0 2px 6px rgba(5, 150, 105, 0.25);
+}
+
+.location-icon-badge svg {
+  width: 18px;
+  height: 18px;
+  fill: #ffffff;
+}
+
+.location-text-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+}
+
+.location-primary {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #064e3b;
+  letter-spacing: 0.1px;
+  line-height: 1.3;
+}
+
+.location-secondary {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #047857;
+  line-height: 1.4;
+}
+
+@media (max-width: 380px) {
+  .store-card {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .store-location-card {
+    align-items: flex-start;
+    gap: 9px;
+    padding: 11px;
+  }
+
+  .location-icon-badge {
+    margin-top: 1px;
+  }
 }
 
 /* Rating Section */

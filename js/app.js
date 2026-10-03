@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Elements
   const shopNameEl = document.getElementById('shopName');
   const shopTaglineEl = document.getElementById('shopTagline');
-  const shopLocationEl = document.getElementById('shopLocation');
+  const shopLocationPrimaryEl = document.getElementById('shopLocationPrimary');
+  const shopLocationSecondaryEl = document.getElementById('shopLocationSecondary');
   
   const starButtons = document.querySelectorAll('.star-btn');
   const ratingStatusEl = document.getElementById('ratingStatus');
@@ -33,7 +34,15 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typeof CONFIG !== 'undefined') {
     if (shopNameEl) shopNameEl.textContent = CONFIG.shopName || "Abhishek Medical Hall";
     if (shopTaglineEl) shopTaglineEl.textContent = CONFIG.shopTagline || "Trusted Healthcare & Genuine Medicines";
-    if (shopLocationEl) shopLocationEl.textContent = CONFIG.shopLocation || "Adapur, Bihar";
+    if (CONFIG.shopLocation) {
+      const locationParts = CONFIG.shopLocation.split(/,\s*(?=East Champaran,)/);
+      if (shopLocationPrimaryEl) {
+        shopLocationPrimaryEl.textContent = locationParts[0];
+      }
+      if (shopLocationSecondaryEl) {
+        shopLocationSecondaryEl.textContent = locationParts[1] || "Adapur, Bihar";
+      }
+    }
   }
 
   // Render suggestion categories and pills
