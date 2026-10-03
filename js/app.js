@@ -46,6 +46,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Render suggestion categories and pills
+  function getCategoryReviews(category) {
+    if (!category) return [];
+    return category[`reviews${selectedRating}`] || category.reviews || [];
+  }
+
   function renderSuggestions() {
     if (!CONFIG || !CONFIG.reviewSuggestions || CONFIG.reviewSuggestions.length === 0) return;
     
@@ -82,9 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderSuggestionPills() {
     suggestionsListContainer.innerHTML = '';
     const currentCategory = CONFIG.reviewSuggestions[activeCategoryIndex];
-    if (!currentCategory) return;
+    const reviews = getCategoryReviews(currentCategory);
 
-    currentCategory.reviews.forEach((reviewText) => {
+    reviews.forEach((reviewText) => {
       const pill = document.createElement('div');
       pill.className = 'suggestion-pill';
       if (reviewTextarea.value.trim() === reviewText.trim()) {
@@ -143,6 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function selectRating(rating, clickedBtn) {
+    const ratingChanged = selectedRating !== rating;
     selectedRating = rating;
 
     // Update active visual state
@@ -160,8 +166,8 @@ document.addEventListener('DOMContentLoaded', () => {
     feedbackSection.classList.add('show');
     
     // Auto-select first popular suggestion if textarea is empty
-    if (!reviewTextarea.value.trim() && CONFIG.reviewSuggestions.length > 0) {
-      const defaultSuggestion = CONFIG.reviewSuggestions[0].reviews[0];
+    if ((!reviewTextarea.value.trim() || ratingChanged) && CONFIG.reviewSuggestions.length > 0) {
+      const defaultSuggestion = getCategoryReviews(CONFIG.reviewSuggestions[0])[0];
       reviewTextarea.value = defaultSuggestion;
     }
 
