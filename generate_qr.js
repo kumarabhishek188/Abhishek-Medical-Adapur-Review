@@ -52,7 +52,7 @@ function generateQR(url, targetSvgPath, targetArtifactSvgPath) {
   console.log("\nSVG QR successfully saved to: " + targetSvgPath);
 }
 
-const targetUrl = process.argv[2] || "https://abhishekmedicaladapurgoolereview.netlify.app";
+const targetUrl = process.argv[2] || "https://abhishekmedicaladapurgooglereview.netlify.app/";
 const svgPath = "/Users/abhishekkumar/Desktop/AMH review/qr-code.svg";
 const artifactSvgPath = "/Users/abhishekkumar/.gemini/antigravity/brain/515ca0c8-b923-45c1-8db5-a59ecf161baf/qr-code.svg";
 

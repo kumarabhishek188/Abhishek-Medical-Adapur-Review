@@ -43,7 +43,7 @@ AMH review/
 
 ## 🌐 Live Deployment
 
-- **Netlify Live App**: [https://abhishekmedicaladapurgoolereview.netlify.app](https://abhishekmedicaladapurgoolereview.netlify.app)
+- **Netlify Live App**: [https://abhishekmedicaladapurgooglereview.netlify.app/](https://abhishekmedicaladapurgooglereview.netlify.app/)
 - **GitHub Repository**: [https://github.com/kumarabhishek188/Abhishek-Medical-Adapur-Review](https://github.com/kumarabhishek188/Abhishek-Medical-Adapur-Review)
 
 ---
