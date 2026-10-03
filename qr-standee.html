@@ -131,6 +131,10 @@
       width: 100%;
     }
 
+    .print-page-title {
+      display: none;
+    }
+
     .standee-sheet {
       background: #ffffff;
       border: 2.5px solid #059669;
@@ -354,11 +358,21 @@
         margin: 0 !important;
       }
       .standee-wrapper {
+        display: block !important;
         margin: 0 auto !important;
         padding: 0 !important;
         page-break-inside: avoid !important;
         page-break-after: avoid !important;
         page-break-before: avoid !important;
+      }
+      .print-page-title {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 auto 8px !important;
+        text-align: center !important;
+        font-size: 0.85rem !important;
+        font-weight: 700 !important;
+        color: #1e293b !important;
       }
       .standee-sheet {
         box-shadow: none !important;
@@ -433,6 +447,7 @@
 
     <!-- Printable Counter Standee Sheet -->
     <div class="standee-wrapper">
+      <div class="print-page-title">Abhishek Medical Hall - Counter QR Standee Generator</div>
       <div class="standee-sheet" id="printableStandee">
         <div class="standee-header-decor"></div>
         
@@ -553,7 +568,12 @@
 
       // Direct 1-Page Print Handler
       printBtn.addEventListener('click', () => {
+        document.title = '';
         window.print();
+      });
+
+      window.addEventListener('afterprint', () => {
+        document.title = 'Abhishek Medical Hall - Counter QR Standee Generator';
       });
 
       // Download a high-resolution QR PNG using a Blob for reliable browser downloads.
