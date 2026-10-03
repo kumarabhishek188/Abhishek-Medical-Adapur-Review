@@ -35,6 +35,28 @@ AMH review/
 │   ├── config.js      # Easy configuration (Shop Name, Google Link, Suggestions)
 │   ├── app.js         # App logic (Ratings, Suggestions, Clipboard, Redirects)
 │   └── qrcode.min.js  # Offline high-resolution QR generator
+├── netlify.toml       # Netlify hosting configuration
 └── README.md          # Documentation & deployment guide
 ```
 
+---
+
+## 🌐 Live Deployment
+
+- **Netlify Live App**: [https://abhishekmedicaladapurgoolereview.netlify.app](https://abhishekmedicaladapurgoolereview.netlify.app)
+- **GitHub Repository**: [https://github.com/kumarabhishek188/Abhishek-Medical-Adapur-Review](https://github.com/kumarabhishek188/Abhishek-Medical-Adapur-Review)
+
+---
+
+## 🛠️ How to Customize
+
+All settings (Shop name, location, Google Review URL, custom suggestions) can be changed in **`js/config.js`**:
+
+```javascript
+const CONFIG = {
+  shopName: "Abhishek Medical Hall",
+  shopLocation: "Central Bank Road Adapur, East Champaran, Bihar - 845301",
+  googleReviewUrl: "YOUR_GOOGLE_REVIEW_LINK_HERE",
+  ...
+};
+```

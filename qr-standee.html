@@ -165,12 +165,13 @@
     }
 
     .standee-location-sub {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: #047857;
       font-weight: 700;
       margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      line-height: 1.35;
+      letter-spacing: 0.2px;
+      padding: 0 8px;
     }
 
     .stars-display {
@@ -349,7 +350,7 @@
         </div>
 
         <h1 class="standee-store-title" id="standeeShopName">Abhishek Medical Hall</h1>
-        <p class="standee-location-sub" id="standeeShopLocation">Main Road, Adapur (Bihar)</p>
+        <p class="standee-location-sub" id="standeeShopLocation">Central Bank Road Adapur, East Champaran, Bihar - 845301</p>
 
         <div class="stars-display">
           ★★★★★
@@ -757,7 +758,7 @@
       // Update shop details
       if (typeof CONFIG !== 'undefined') {
         document.getElementById('standeeShopName').textContent = CONFIG.shopName || "Abhishek Medical Hall";
-        document.getElementById('standeeShopLocation').textContent = CONFIG.shopLocation || "Main Road, Adapur (Bihar)";
+        document.getElementById('standeeShopLocation').textContent = CONFIG.shopLocation || "Central Bank Road Adapur, East Champaran, Bihar - 845301";
       }
 
       function renderQRCode(text) {

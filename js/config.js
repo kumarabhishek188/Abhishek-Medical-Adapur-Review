@@ -6,7 +6,7 @@
 const CONFIG = {
   shopName: "Abhishek Medical Hall",
   shopTagline: "Trusted Healthcare & Genuine Medicines",
-  shopLocation: "Main Road, Adapur, East Champaran, Bihar - 845301",
+  shopLocation: "Central Bank Road Adapur, East Champaran, Bihar - 845301",
   shopPhone: "+91 98765 43210",
   
   // Google Maps / Search link for reviews
