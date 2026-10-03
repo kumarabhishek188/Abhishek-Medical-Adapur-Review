@@ -131,10 +131,6 @@
       width: 100%;
     }
 
-    .print-page-title {
-      display: none;
-    }
-
     .standee-sheet {
       background: #ffffff;
       border: 2.5px solid #059669;
@@ -365,15 +361,6 @@
         page-break-after: avoid !important;
         page-break-before: avoid !important;
       }
-      .print-page-title {
-        display: block !important;
-        width: 100% !important;
-        margin: 0 auto 8px !important;
-        text-align: center !important;
-        font-size: 0.85rem !important;
-        font-weight: 700 !important;
-        color: #1e293b !important;
-      }
       .standee-sheet {
         box-shadow: none !important;
         border: 2.5px solid #059669 !important;
@@ -447,7 +434,6 @@
 
     <!-- Printable Counter Standee Sheet -->
     <div class="standee-wrapper">
-      <div class="print-page-title">Abhishek Medical Hall - Counter QR Standee Generator</div>
       <div class="standee-sheet" id="printableStandee">
         <div class="standee-header-decor"></div>
         
@@ -568,12 +554,34 @@
 
       // Direct 1-Page Print Handler
       printBtn.addEventListener('click', () => {
-        document.title = '';
-        window.print();
-      });
+        const printWindow = window.open('', '_blank');
+        if (!printWindow) {
+          window.print();
+          return;
+        }
 
-      window.addEventListener('afterprint', () => {
-        document.title = 'Abhishek Medical Hall - Counter QR Standee Generator';
+        printWindow.document.title = '';
+        printWindow.document.head.innerHTML = '';
+        document.querySelectorAll('link[rel="stylesheet"], style').forEach((styleElement) => {
+          printWindow.document.head.appendChild(styleElement.cloneNode(true));
+        });
+
+        const standee = document.getElementById('printableStandee').cloneNode(true);
+        standee.querySelectorAll('canvas').forEach((canvas) => {
+          const image = document.createElement('img');
+          image.src = canvas.toDataURL('image/png');
+          image.alt = 'QR code for Abhishek Medical Hall review page';
+          image.width = canvas.width;
+          image.height = canvas.height;
+          canvas.replaceWith(image);
+        });
+
+        printWindow.document.body.innerHTML = '';
+        printWindow.document.body.appendChild(standee);
+        printWindow.document.body.style.cssText = 'margin: 0; padding: 0; background: #ffffff;';
+        printWindow.addEventListener('afterprint', () => printWindow.close(), { once: true });
+        printWindow.focus();
+        setTimeout(() => printWindow.print(), 250);
       });
 
       // Download a high-resolution QR PNG using a Blob for reliable browser downloads.
