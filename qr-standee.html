@@ -566,45 +566,13 @@
       renderQRCode(reviewLandingUrl);
 
       // Direct 1-Page Print Handler
-      printBtn.addEventListener('click', async () => {
-        const printWindow = window.open('', '_blank');
-        if (!printWindow) {
-          window.print();
-          return;
-        }
+      printBtn.addEventListener('click', () => {
+        document.title = '';
+        window.print();
+      });
 
-        printWindow.document.title = '';
-        printWindow.document.head.innerHTML = '';
-        document.querySelectorAll('link[rel="stylesheet"], style').forEach((styleElement) => {
-          const copiedStyle = styleElement.cloneNode(true);
-          if (copiedStyle.tagName === 'LINK') {
-            copiedStyle.href = new URL(styleElement.getAttribute('href'), window.location.href).href;
-          }
-          printWindow.document.head.appendChild(copiedStyle);
-        });
-
-        const standee = document.getElementById('printableStandee').cloneNode(true);
-        const qrImageReady = [];
-        standee.querySelectorAll('canvas').forEach((canvas) => {
-          const image = document.createElement('img');
-          qrImageReady.push(new Promise((resolve) => {
-            image.onload = resolve;
-            image.onerror = resolve;
-          }));
-          image.src = canvas.toDataURL('image/png');
-          image.alt = 'QR code for Abhishek Medical Hall review page';
-          image.width = canvas.width;
-          image.height = canvas.height;
-          canvas.replaceWith(image);
-        });
-
-        printWindow.document.body.innerHTML = '';
-        printWindow.document.body.appendChild(standee);
-        printWindow.document.body.style.cssText = 'margin: 0; padding: 0; background: #ffffff;';
-        await Promise.all(qrImageReady);
-        printWindow.addEventListener('afterprint', () => printWindow.close(), { once: true });
-        printWindow.focus();
-        printWindow.print();
+      window.addEventListener('afterprint', () => {
+        document.title = 'Abhishek Medical Hall - Counter QR Standee Generator';
       });
 
       // Download a high-resolution QR PNG using a Blob for reliable browser downloads.
