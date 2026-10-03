@@ -529,7 +529,7 @@
 
       function renderQRCode(text) {
         try {
-          const qr = qrcode(0, 'M');
+          const qr = qrcode(0, 'H');
           qr.addData(text);
           qr.make();
 
@@ -559,7 +559,7 @@
       // Download a high-resolution QR PNG using a Blob for reliable browser downloads.
       downloadBtn.addEventListener('click', () => {
         try {
-          const qr = qrcode(0, 'M');
+          const qr = qrcode(0, 'H');
           qr.addData(reviewLandingUrl);
           qr.make();
 
