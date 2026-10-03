@@ -7,7 +7,7 @@ const CONFIG = {
   shopName: "Abhishek Medical Hall",
   shopTagline: "Trusted Healthcare & Genuine Medicines",
   shopLocation: "Central Bank Road Adapur, East Champaran, Bihar - 845301",
-  shopPhone: "+91 98765 43210",
+  shopPhone: "+91 8651887544",
   
   // Google Maps / Search link for reviews
   googleReviewUrl: "https://www.google.com/search?q=abhishek+medical+adapur+bihar&oq=abhishek+medical+adapur+bihar&gs_lcrp=EgZjaHJvbWUqBggAEEUYOzIGCAAQRRg7MgoIARAAGIAEGKIEMgcIAhAAGO8FMgcIAxAAGO8FMgcIBBAAGO8FMgoIBRAAGIAEGKIE0gEIODg2NWowajeoAgCwAgA&sourceid=chrome&source=chrome.ob&ie=UTF-8",
@@ -18,14 +18,14 @@ const CONFIG = {
       category: "⭐ Most Popular",
       badge: "Popular",
       reviews5: [
-        "Best medical shop in Adapur! 100% genuine medicines, fair pricing, and very polite owner Abhishek ji.",
+        "Best medical shop in Adapur! 100% genuine medicines, fair pricing, and very polite owner Birbeni ji.",
         "One of the most trusted pharmacies in Adapur. All prescribed medicines are readily available here.",
-        "अदापुर का सबसे भरोसेमंद मेडिकल स्टोर। सभी दवाइयां सही दाम पर हमेशा उपलब्ध रहती हैं।"
+        "आदापुर का सबसे भरोसेमंद मेडिकल स्टोर। सभी दवाइयां सही दाम पर हमेशा उपलब्ध रहती हैं।"
       ],
       reviews4: [
         "Good medical shop in Adapur with genuine medicines and helpful service.",
         "A reliable pharmacy for prescribed medicines and everyday healthcare needs.",
-        "अदापुर में अच्छी मेडिकल दुकान है। दवाइयां सही मिलती हैं और व्यवहार भी अच्छा है।"
+        "आदापुर में अच्छी मेडिकल दुकान है। दवाइयां सही मिलती हैं और व्यवहार भी अच्छा है।"
       ]
     },
     {
