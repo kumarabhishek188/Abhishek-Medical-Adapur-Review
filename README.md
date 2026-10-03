@@ -48,15 +48,4 @@ AMH review/
 
 ---
 
-## 🛠️ How to Customize
 
-All settings (Shop name, location, Google Review URL, custom suggestions) can be changed in **`js/config.js`**:
-
-```javascript
-const CONFIG = {
-  shopName: "Abhishek Medical Hall",
-  shopLocation: "Central Bank Road Adapur, East Champaran, Bihar - 845301",
-  googleReviewUrl: "YOUR_GOOGLE_REVIEW_LINK_HERE",
-  ...
-};
-```
