@@ -64,6 +64,11 @@
       box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
     }
 
+    .input-field[readonly] {
+      color: #047857;
+      cursor: default;
+    }
+
     .btn-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -164,29 +169,77 @@
       margin-bottom: 4px;
     }
 
-    .standee-location-sub {
-      display: inline-flex;
-      align-items: flex-start;
-      justify-content: center;
-      gap: 6px;
-      font-size: 0.82rem;
-      color: #047857;
-      font-weight: 700;
-      margin-bottom: 8px;
-      line-height: 1.35;
-      padding: 0 8px;
-      max-width: 92%;
-      margin-left: auto;
-      margin-right: auto;
+    .standee-location-card {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      width: 100%;
+      max-width: 360px;
+      margin: 0 auto 10px;
+      padding: 8px 10px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 12px;
       text-align: left;
+      box-shadow: 0 2px 5px rgba(5, 150, 105, 0.06);
     }
 
-    .standee-location-sub svg {
-      width: 15px;
-      height: 15px;
-      fill: #059669;
+    .standee-location-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex-shrink: 0;
-      margin-top: 2px;
+      background: linear-gradient(135deg, #059669, #047857);
+      box-shadow: 0 2px 5px rgba(5, 150, 105, 0.22);
+    }
+
+    .standee-location-icon svg {
+      width: 16px;
+      height: 16px;
+      fill: #ffffff;
+    }
+
+    .standee-location-text {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      min-width: 0;
+      gap: 1px;
+    }
+
+    .standee-location-primary {
+      font-size: 0.82rem;
+      color: #064e3b;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+
+    .standee-location-secondary {
+      font-size: 0.71rem;
+      color: #047857;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    @media (max-width: 380px) {
+      .standee-control-panel {
+        padding: 16px;
+      }
+
+      .standee-sheet {
+        padding: 22px 14px 16px;
+      }
+
+      .standee-location-card {
+        align-items: flex-start;
+      }
+
+      .standee-location-icon {
+        margin-top: 1px;
+      }
     }
 
     .stars-display {
@@ -325,8 +378,8 @@
       </p>
 
       <div class="input-group">
-        <label for="landingUrlInput">Review Page URL to Encode:</label>
-        <input type="text" id="landingUrlInput" class="input-field" value="https://abhishekmedicaladapurgooglereview.netlify.app/">
+        <label for="landingUrlInput">QR destination (locked to your review page):</label>
+        <input type="text" id="landingUrlInput" class="input-field" value="https://abhishekmedicaladapurgooglereview.netlify.app/" readonly aria-readonly="true">
       </div>
 
       <div class="btn-row">
@@ -367,12 +420,17 @@
 
         <h1 class="standee-store-title" id="standeeShopName">Abhishek Medical Hall</h1>
         
-        <p class="standee-location-sub" id="standeeShopLocation">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-          </svg>
-          <span id="standeeShopAddressText">Central Bank Road Adapur, East Champaran, Bihar - 845301</span>
-        </p>
+        <div class="standee-location-card" aria-label="Store address">
+          <div class="standee-location-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+            </svg>
+          </div>
+          <div class="standee-location-text">
+            <span class="standee-location-primary" id="standeeShopLocationPrimary">Central Bank Road Adapur</span>
+            <span class="standee-location-secondary" id="standeeShopLocationSecondary">East Champaran, Bihar - 845301</span>
+          </div>
+        </div>
 
         <div class="stars-display">
           ★★★★★
@@ -423,17 +481,20 @@
       const downloadBtn = document.getElementById('downloadQrBtn');
       const printBtn = document.getElementById('printStandeeBtn');
       const encodedUrlPreview = document.getElementById('encodedUrlPreview');
-      const standeeShopAddressText = document.getElementById('standeeShopAddressText');
+      const standeeShopLocationPrimary = document.getElementById('standeeShopLocationPrimary');
+      const standeeShopLocationSecondary = document.getElementById('standeeShopLocationSecondary');
 
-      // Set destination URL to the official review landing page
-      let defaultUrl = "https://abhishekmedicaladapurgooglereview.netlify.app/";
-      urlInput.value = defaultUrl;
+      // Keep every generated QR pointed to the live review dashboard.
+      const reviewLandingUrl = "https://abhishekmedicaladapurgooglereview.netlify.app/";
+      urlInput.value = reviewLandingUrl;
 
       // Update shop details
       if (typeof CONFIG !== 'undefined') {
         document.getElementById('standeeShopName').textContent = CONFIG.shopName || "Abhishek Medical Hall";
-        if (standeeShopAddressText) {
-          standeeShopAddressText.textContent = CONFIG.shopLocation || "Central Bank Road Adapur, East Champaran, Bihar - 845301";
+        if (CONFIG.shopLocation) {
+          const locationParts = CONFIG.shopLocation.split(/,\s*(?=East Champaran,)/);
+          if (standeeShopLocationPrimary) standeeShopLocationPrimary.textContent = locationParts[0];
+          if (standeeShopLocationSecondary) standeeShopLocationSecondary.textContent = locationParts[1] || "Adapur, Bihar";
         }
       }
 
@@ -459,13 +520,7 @@
         }
       }
 
-      renderQRCode(urlInput.value);
-
-      // Live update on input
-      urlInput.addEventListener('input', () => {
-        const val = urlInput.value.trim();
-        if (val) renderQRCode(val);
-      });
+      renderQRCode(reviewLandingUrl);
 
       // Direct 1-Page Print Handler
       printBtn.addEventListener('click', () => {
@@ -474,7 +529,7 @@
 
       // Direct Download PNG Handler (Creates a clean high-res 1000px PNG)
       downloadBtn.addEventListener('click', () => {
-        const text = urlInput.value.trim() || defaultUrl;
+        const text = reviewLandingUrl;
         const qr = qrcode(0, 'M');
         qr.addData(text);
         qr.make();
